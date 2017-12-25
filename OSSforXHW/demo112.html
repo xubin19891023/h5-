@@ -1,0 +1,404 @@
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>
+        js调用java
+    </title>
+</head >
+
+<body >
+<p>
+    <xmp id="show">
+    </xmp>
+</p>
+<p>
+    <xmp id="init">
+    </xmp>
+</p>
+<p>
+    <input type="text" onclick="inputCloseKeyboard()"/>
+</p>
+<p>
+    <input type="button" value="调用Native方法" onclick="MyNative.api(
+                'submitFromWeb'
+                , {'param': '中文测试'}
+                , function(responseData) {
+                    document.getElementById('show').innerHTML = responseData
+            }
+            );"
+    />
+</p>
+<p>
+    <input type="button" value="跳转到登录页面" onclick="MyNative.windows(
+                'jumpToLogin'
+            );"
+    />
+</p>
+
+<p>
+<input type="button" value="登录" onclick="MyNative.oauth('Oauth.success',{token:'12345678987654567'});"
+/>
+</p>
+
+<p>
+<input type="button" value="运营终端获取系统设置参数" onclick="MyNative.business('Window.getOSSBasicSettings',null, function(responseData) {
+    document.getElementById('show').innerHTML = responseData.outoPrint
+<!-- responseData为返回JSONObject对象,可直接responseData.outoPrint直接获取属性值-->
+});"
+/>
+</p>
+
+
+
+
+<!--调用相机拍照-->
+<p>
+    <input type="button" value="调用相机拍照" onclick="MyNative.camera(
+                'Camera'
+                , {'type': 'PHOTO'}
+                , function(responseData) {
+                    document.getElementById('show').innerHTML =responseData
+            }
+            );"
+    />
+</p>
+<p>
+    <input type="button" value="调用相机摄像" onclick="MyNative.camera(
+                'Camera'
+                , {'type': 'VIDEO'}
+                , function(responseData) {
+                    document.getElementById('show').innerHTML =responseData
+            }
+            );"
+    />
+</p>
+<p>
+    <input type="button" value="扩展测试" onclick="MyNative.windows(
+    'extend'
+    , {'type': 'VIDEO'}
+    , function(responseData) {
+<!--    document.getElementById('show').innerHTML =responseData-->
+    }
+    );"
+    />
+</p>
+
+<p>
+<input type="button" value="调用相机扫描" onclick="camera_m()"
+/>
+</p>
+<p>
+    <input type="button" value="打开相册选择图片" onclick="MyNative.camera(
+                'Camera'
+                , {'type': 'IMAGE'}
+                , function(responseData) {
+                    document.getElementById('show').innerHTML =responseData
+            }
+            );"
+    />
+</p>
+<p>
+    <input type="button" value="获取经纬度设备经纬度" onclick="MyNative.geolocation(
+                'GetPosition'
+                , {'type': 'LOCATION'}
+                , function(responseData) {
+                document.getElementById('show').innerHTML =responseData
+                }
+            );"
+    />
+</p>
+<p>
+    <input type="button" value="主屏投放到分屏" onclick="MyNative.windows(
+                'Window.showMainUITOLCD'
+            );"
+    />
+</p>
+<p>
+    <input type="button" value="取消主屏投放" onclick="MyNative.windows(
+                'Window.hideMainUI'
+            );"
+    />
+</p>
+<p>
+    <input type="button" value="自定义打开新窗体" onclick="MyNative.windows(
+                 'Window.open'
+                  , {'name': '乡货网',toolsbar:[{'name':'返回','ioc':'BACK','pasitions':'LEFT','onclick':'selectQuery'}],
+                  'style':'TOP','content':'https://www.baidu.com','callbackfun':'balanceCallbackfun'}, function(responseData) {
+<!--                  document.getElementById('show').innerHTML =responseData-->
+
+                  }
+                  
+            );"
+    />
+</p>
+<p>
+    <input type="button" value="打开称重界面" onclick="MyNative.windows(
+                 'Window.openBalance'
+                  , {'content': 'file:///android_asset/ht.html','width': '90%','height': '100%','slide': 'RIGHT',callbackfun:'balanceCallback'}
+            );"
+    />
+</p>
+<p>
+<input type="button" value="打开称重分拣界面" onclick="MyNative.windows('Window.openBalanceSorting',{content:'http://shop-b2bh5.devxianghuowang.me:8045/trade/sorting/show.do','width': '100%','height': '100%'});"
+/>
+</p>
+ 
+<p>
+<input type="button" value="分拣页面选择商品" onclick="MyNative.business('selectSortingGoods',{name:'apple', require_weight:88.00, standard_price:12.88, totalMoney:8.88, weightType:'659', unitName:'公斤', sku:'123456',id:1});"
+/>
+</p>
+
+<p>
+
+<input type="button" value="称重分拣确定本次称重" onclick="MyNative.business('ensureWeight',{method:'countSorting'},function(responseData) {
+});"
+/>
+</p>
+
+
+<p>
+<input type="button" value="称重分拣界面重置参数" onclick="MyNative.windows('clearSorting',{type:'ALL1'});"
+/>
+</p>
+
+<p>
+<input type="button" value="打开称重出入库有界面" onclick="MyNative.windows('Window.openBalanceStorage',{content:'http://www.baidu.com',width: '100%',height: '100%',name:'称重出库'});"
+/>
+</p>
+
+<p>
+<input type="button" value="称重出入库界面选择了称重商品发送给本地" onclick="MyNative.business('selectStorageGoods',{name:'apple', require_weight:88.00, sku:'123456',id:1});
+"
+/>
+</p>
+
+<p>
+<input type="button" value="称重出入库确定本次称重" onclick="MyNative.business('ensureWeight',{method:'countSorting'},function(responseData) {
+});"
+/>
+</p>
+
+<p>
+<input type="button" value="称重出入库界面重置参数" onclick="MyNative.business('clearStorage',{type:'ALL'});"
+/>
+</p>
+
+<p>
+    <input type="button" value="选择了商品" onclick="MyNative.windows(
+                 'Window.balanceGoodsCompute'
+                  , {'name':'乡货网/青苹果','price':'12.88','imageUrl':'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489721164422&di=1b843ac3f46086c63e1c69bb5ed18668&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F140623%2F267858-1406230A41168.jpg','sku':'123456798'}
+            );"
+    />
+</p>
+
+
+<p>
+    <input type="button" value="开钱箱" onclick="MyNative.business(
+                 'Window.openCashBox'
+                  , {'business': 'openCashBox'}
+            );"
+    />
+</p>
+<p>
+<input type="button" value="打印小票" onclick="MyNative.business('Window.printReceipt',{'companyName': '雨花区A乡货坊','user_id': 'A10086','print_time': '2017-06-15 19:34:07',
+payTypes:[
+{
+payName:'现金',payMoney:'22.22'
+},
+{
+payName:'微信',payMoney:'33.33'
+}
+],
+goods: [{name: '一个巨大的鸡蛋',price: '9.8',backMoney: '0.2',nums: '3',totalPrice: '29.4'},{'name': '鸡蛋', 'price': '9.8', 'backMoney': '0.2','nums': '3','totalPrice': '29.4'},{ 'name': '鸡蛋','price': '9.8','backMoney': '0.2','nums': '3','totalPrice': '29.4'}],'totalNums': '3','yingfuTotalPrice': '88.20', 'shifuTotalPrice': '100.00','zhaolingMoney':'11.80元', 'payType': '微信支付','billNo': 'XX123456789','tihuo_phone': '18123456789','send_date': '2017-06-16'});"
+    />
+</p>
+<p>
+<input type="button" value="打印标签" onclick="MyNative.business('Window.printSortingLabel', {member:'可可西里水果店',goods:'沙漠瓜',number:'15',sorting_number:'B14',sku:'DD2017090917510000',standard_price:'18.0',weight:'6.8kg',total_money:'1000.00元'});"
+    />
+</p>
+<p>
+    <input type="button" value="发送数据给副屏1" onclick="MyNative.business('Window.addDataToLCD',
+    {totalSellerPrice:'238.00',yingshouTotalPrice:'188.00',backTotalPrice:'50.00',shishouTotalPrice:'200.00',zhaolingMoney:'12.00',totalNums:'3',goods:[{name: '鸡蛋',sellPrice: '8.5元/kg',activiyPrice: '8.0元/kg',buyNums: '3',ntotal_price: '24.00'},{name: '鸡蛋',sellPrice: '8.5元/kg',activiyPrice: '8.0元/kg',buyNums: '3',ntotal_price: '24.00'},{name: '鸡蛋',sellPrice: '8.5元/kg',activiyPrice: '8.0元/kg',buyNums: '3',ntotal_price: '24.00'}]
+    ,activitys:[{type:'250',desc:'鸡蛋满50元送10个'},{type:'108',desc:'秒杀满100元送250个'}]}
+    );"
+    />
+</p>
+<p>
+    <input type="button" value="发送数据给副屏2" onclick="MyNative.business('Window.addDataToLCD',{totalSellerPrice:'238.00',yingshouTotalPrice:'188.00',backTotalPrice:'50.00',shishouTotalPrice:'200.00',zhaolingMoney:'12.00',totalNums:'3',goods:[{name: '鸡蛋',sellPrice: '8.5元/kg',activiyPrice: '8.0元/kg',buyNums: '3',ntotal_price: '24.00'},{name: '鸡蛋',sellPrice: '8.5元/kg',activiyPrice: '8.0元/kg',buyNums: '3',ntotal_price: '24.00'},{name: '鸡蛋',sellPrice: '8.5元/kg',activiyPrice: '8.0元/kg',buyNums: '3',ntotal_price: '24.00'}],activitys:[{type:'250',desc:'鸡蛋满50元送10个'},{type:'108',desc:'秒杀满100元送250个'}]});"
+    />
+</p>
+<p>
+    <input type="button" value="清空分屏账单数据" onclick="MyNative.business('Window.clearLCDData');"
+    />
+</p>
+</body>
+<p>
+    <input type="button" value="弹窗" onclick="MyNative.windows(
+                 'Window.dialog'
+                  , {'cancel': 'fail','ok': 'success','message': '我是猪'}
+                , function(responseData) {
+                    document.getElementById('show').innerHTML = responseData
+            }
+            );"
+    />
+</p>
+
+<p>
+<input type="button" value="弹窗POP" onclick="MyNative.windows('Window.showpop', {content: [{name:'扫一扫',type:'SCAN'},{name:'返回桌面',type:'BACK'}]});
+"
+/>
+</p>
+<p>
+    <input type="button" value="打开键盘" onclick="MyNative.windows(
+                 'Window.openKeyboard'
+            );"
+    />
+</p>
+<p>
+    <input type="button" value="关闭键盘" onclick="MyNative.windows(
+                 'Window.closeKeyboard'
+            );"
+    />
+</p>
+
+
+<p>
+<input type="button" value="打开地图定位" onclick= "MyNative.windows('getAddress','null',function(responseData) {document.getElementById('show').innerHTML = responseData})";
+/>
+</p>
+
+<p>
+<input type="button" value="打开导航" onclick= "MyNative.windows('toNavigation',{longitude:'112.95',latitude:'28.2'}, function(responseData) {document.getElementById('show').innerHTML = responseData})";
+/>
+</p>
+
+
+<p>
+    <input type="button" value="文字转语音" onclick="MyNative.windows(
+                 'speaking',
+                  {'speak': '订单号:123456789,应付123456789元,实付123456789元,找零￥123456789'}
+            );"
+    />
+</p>
+
+<p>
+<input type="button" value="说话转文字" onclick="MyNative.windows('voiceToWord',null, function(responseData) {
+document.getElementById('show').innerHTML = responseData
+});"
+/>
+</p>
+
+<p>
+<input type="button" value="获取父界面的方法" onclick="MyNative.oauth('Window.callbackfun',{'method':'voiceToWord','param':[{'voiceToWord':'voiddddceToWord'}] });"
+/>
+</p>
+<p>
+<input type="button" value="show" onclick="callbackfun()"
+/>
+</p>
+
+<script type="text/javascript">
+ function selectQuery(){
+   document.getElementById("show").innerHTML =
+    "Native调用了js函数1selectQuery()1";
+ }
+ function balanceCallbackfun(responseData){
+   document.getElementById("show").innerHTML =
+    '1117';
+    alert(responseData.onclick);
+ }
+ function callbackfun(){
+   document.getElementById("show").innerHTML =
+    "新建H5界面调用了父H5界面js函数有参数";
+    window.webkit.messageHandlers.xianghuo.postMessage("show");//dengzhucai
+
+ }
+
+function camera_m()
+{
+    //dengzhucai
+
+    MyNative.camera('Camera', {'type': 'SCAN'}, function(responseData) {
+                    
+                    document.getElementById('show').innerHTML =responseData['result']
+                    //document.getElementById('show').innerHTML = '哈哈哈哈哈';
+                        window.webkit.messageHandlers.xianghuo.postMessage("12355677")//dengzhucai
+                    
+                    }
+                    )
+                    window.webkit.messageHandlers.xianghuo.postMessage("8888888888")//dengzhucai
+
+}
+
+function inputCloseKeyboard() {//输入框的点击事件 禁用系统键盘
+     MyNative.windows('Window.closeKeyboard');
+            alert("zzz");
+}
+
+
+
+function login() {//返回
+              //call native method
+try{
+            <!--alert('runing start');-->
+            windows.MyNative.business('Window.printReceipt',{
+    'companyName': '雨花区A乡货坊',
+    'user_id': 'A10086',
+    'print_time': '2017-06-15 19:34:07',
+    goods: [
+        {
+            name: '鸡蛋',
+            price: '9.8元/kg',
+            backMoney: '0.2kg',
+            nums: '3',
+            totalPrice: '29.4元'
+        },
+        {
+            'name': '鸡蛋',
+            'price': '9.8元/kg',
+            'backMoney': '0.2kg',
+            'nums': '3',
+            'totalPrice': '29.4元'
+        },
+        {
+            'name': '鸡蛋',
+            'price': '9.8元/kg',
+            'backMoney': '0.2kg',
+            'nums': '3',
+            'totalPrice': '29.4元'
+        }
+    ],
+    'totalNums': '3',
+    'yingfuTotalPrice': '88.20元',
+    'shifuTotalPrice': '100.00元',
+    'zhaolingMoney':'11.80元',
+    'payType': '微信支付',
+    'billNo': 'XX123456789',
+    'tihuo_address': '乡货网',
+    'tihuo_phone': '18123456789',
+    'send_date': '2017-06-16'
+});
+            <!--alert('runing end')-->
+        }catch(e){
+            alert("error:"+e);
+        }
+
+        }
+        function fail() {//返回
+              //call native method
+document.getElementById("show").innerHTML =
+    "取消";
+
+        }
+        function success() {//返回
+              //call native method
+document.getElementById("show").innerHTML =
+    "确定";
+
+        }
+ function countSorting(responseData){
+    document.getElementById("show").innerHTML = responseData.weight;
+}
+</script>
+
+</html>
